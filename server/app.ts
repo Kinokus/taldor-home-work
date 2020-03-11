@@ -68,9 +68,13 @@ let categories: Category[] = [
     new Category(4, 'adult comedy', 21),
 ];
 for (let i = 1; i < 100; i++) {
-    movies.push(new Movie(i, Tools.generateName(), Tools.getRandomInt(0, categories.length - 1), '', ''))
+    movies.push(new Movie(i, Tools.generateName(), Tools.getRandomInt(1, categories.length - 1), '', ''))
 }
 
+
+app.use('/', express.static('../client/dist/taldor-client'));
+app.use('/login', express.static('../client/dist/taldor-client'));
+app.use('/secure', express.static('../client/dist/taldor-client'));
 
 app.get('/api/categories', getCategories);
 
@@ -81,10 +85,13 @@ function getCategories(req, res) {
 
 app.post('/api/login', userLogin);
 
-function userLogin(req, res) {
-    console.log(req.body);
-    // console.log(safeJsonStringify(req));
-    res.send(req.body);
+function userLogin({body}, res) {
+    let isLogged = false;
+    if (body.user === 'admin' && body.password === 'admin') {
+        isLogged = true;
+    }
+    res.send({isLogged})
+
 }
 
 
@@ -119,6 +126,5 @@ function getIndex(req, res) {
     res.send('indexJs');
 }
 
-app.listen(3000, function () {
-    console.log('port 3000!');
+app.listen(80, function () {
 });

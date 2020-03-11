@@ -4,9 +4,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 app.use(bodyParser.json());
-// app.use(bodyParser.raw());
-// app.use(bodyParser.text());
-// app.use(bodyParser.urlencoded());
 var Tools = /** @class */ (function () {
     function Tools() {
     }
@@ -55,19 +52,25 @@ var categories = [
     new Category(4, 'adult comedy', 21),
 ];
 for (var i = 1; i < 100; i++) {
-    movies.push(new Movie(i, Tools.generateName(), Tools.getRandomInt(0, categories.length - 1), '', ''));
+    movies.push(new Movie(i, Tools.generateName(), Tools.getRandomInt(1, categories.length - 1), '', ''));
 }
-app.get('/categories', getCategories);
+app.use('/', express.static('../client/dist/taldor-client'));
+app.use('/login', express.static('../client/dist/taldor-client'));
+app.use('/secure', express.static('../client/dist/taldor-client'));
+app.get('/api/categories', getCategories);
 function getCategories(req, res) {
     res.send(categories);
 }
-app.post('/login', userLogin);
-function userLogin(req, res) {
-    console.log(req.body);
-    // console.log(safeJsonStringify(req));
-    res.send(req.body);
+app.post('/api/login', userLogin);
+function userLogin(_a, res) {
+    var body = _a.body;
+    var isLogged = false;
+    if (body.user === 'admin' && body.password === 'admin') {
+        isLogged = true;
+    }
+    res.send({ isLogged: isLogged });
 }
-app.get('/movies', getMovies);
+app.get('/api/movies', getMovies);
 function getMovies(req, res) {
     if (req.query.categoryId) {
         var moviesFiltered = movies.filter(function (m) { return m.category === req.query.categoryId; });
@@ -77,7 +80,7 @@ function getMovies(req, res) {
         res.send(movies);
     }
 }
-app["delete"]('/movie', (deleteMovie));
+app["delete"]('/api/movie', (deleteMovie));
 function deleteMovie(req, res) {
     // console.log(safeJsonStringify(req));
     var movieToDelete = movies.find(function (m) { return m.id === parseInt(req.body.id); });
@@ -94,6 +97,5 @@ app.get('/', getIndex);
 function getIndex(req, res) {
     res.send('indexJs');
 }
-app.listen(3000, function () {
-    console.log('port 3000!');
+app.listen(80, function () {
 });

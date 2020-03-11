@@ -8,6 +8,7 @@
 
 #### Prepare to work
 - `cd client` 
+- `npm i @angular/cli --global` 
 - `npm install` 
 - `cd ../server`
 - `npm install typescript --global`

@@ -1,0 +1,9 @@
+<div class="main">
+    <app-movie-card
+            *ngFor="let movie of (apiService.moviesSubject | async)"
+            [movie]="movie"
+            [class.hide]="(apiService.selectedCategorySubject | async) !== -1 && (apiService.selectedCategorySubject | async) !== movie.category"
+
+    ></app-movie-card>
+
+</div>

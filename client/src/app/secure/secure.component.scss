@@ -1,0 +1,7 @@
+.main{
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 1fr;
+  grid-column-gap: 8px;
+  grid-row-gap: 0px;
+}

@@ -1,0 +1,4 @@
+<div *ngFor="let category of (apiService.categoriesSubject | async)"
+     (click)="setCategory(category.id)">
+    {{category.name }}
+</div>

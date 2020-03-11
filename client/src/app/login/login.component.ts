@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {ApiService} from "../api.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+    constructor(private  apiService: ApiService) {
+    }
 
-  ngOnInit(): void {
-  }
+    user = new FormControl('');
+    password = new FormControl('');
+    profileForm = new FormGroup({
+        user: this.user,
+        password: this.password,
+    });
 
+
+    ngOnInit(): void {
+    }
+
+    onSubmit() {
+      this.apiService.login(this.user.value, this.password.value);
+    }
 }

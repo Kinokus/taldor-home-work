@@ -1,4 +1,5 @@
 <div *ngFor="let category of (apiService.categoriesSubject | async)"
+     [class.selected]="(apiService.selectedCategorySubject | async) === category.id"
      (click)="setCategory(category.id)">
     {{category.name }}
 </div>

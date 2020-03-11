@@ -46,13 +46,13 @@ var Category = /** @class */ (function () {
     return Category;
 }());
 var categories = [
-    new Category(1, 'documentary', 0),
-    new Category(2, 'detective', 12),
-    new Category(3, 'comedy', 6),
-    new Category(4, 'adult comedy', 21),
+    new Category(0, 'documentary', 0),
+    new Category(1, 'detective', 12),
+    new Category(2, 'comedy', 6),
+    new Category(3, 'adult comedy', 21),
 ];
 for (var i = 1; i < 100; i++) {
-    movies.push(new Movie(i, Tools.generateName(), Tools.getRandomInt(1, categories.length - 1), '', ''));
+    movies.push(new Movie(i, Tools.generateName(), Tools.getRandomInt(0, categories.length - 1), '', ''));
 }
 app.use('/', express.static('../client/dist/taldor-client'));
 app.use('/login', express.static('../client/dist/taldor-client'));
